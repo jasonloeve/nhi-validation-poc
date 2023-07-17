@@ -39,3 +39,29 @@ function extractLetter(string $letter): int
 
     return $assignedNumbers[$letter] ?? 0;
 }
+
+
+//Consider using ASCII
+///**
+// * Get the assigned number for a given letter.
+// *
+// * This function takes a letter as input and returns the corresponding assigned number.
+// * The letter is converted to uppercase for consistency.
+// * The assigned numbers are mapped using a lookup table based on the letter's ASCII value.
+// * If the letter is not valid or falls outside the range of assigned numbers, 0 is returned.
+// *
+// * @param string $letter The letter for which the assigned number is needed.
+// * @return int The assigned number for the letter, or 0 if the letter is invalid or out of range.
+// */
+//function extractLetter(string $letter): int
+//{
+//    $letter = strtoupper($letter);
+//    $ascii = ord($letter);
+//    $assignedNumber = $ascii - 64;
+//
+//    if ($assignedNumber > 9) {
+//        $assignedNumber--;
+//    }
+//
+//    return ($assignedNumber >= 1 && $assignedNumber <= 24) ? $assignedNumber : 0;
+//}
