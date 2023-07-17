@@ -18,8 +18,8 @@ class StringValidator {
     public function __construct(string $string)
     {
         $this->string = $string;
-        $this->legacyPattern = '/^(?=.{7}$)[A-Za-z]{3}[0-9]{3}[0-9]$/';
-        $this->newFormatPattern = '/^(?=.{7}$)[A-Za-z]{3}[0-9]{2}[A-Za-z]{2}$/';
+        $this->legacyPattern = '/^(?=.{7}$)[A-Za-z]{3}[0-9]{3}[0-9]$/'; // need to exclude i and o from first three
+        $this->newFormatPattern = '/^(?=.{7}$)[A-Za-z]{3}[0-9]{2}[A-Za-z]{2}$/'; // need to exclude i and o from first three
     }
 
     public function validateString(): void
@@ -45,8 +45,8 @@ class StringValidator {
         // var_dump('processLegacyString catch');
 
         $nhi = $string;
-        $chars = str_split($nhi);
-        // $chars = preg_split('//', $nhi, -1, PREG_SPLIT_NO_EMPTY);
+        //$chars = str_split($nhi);
+        $chars = preg_split('//', $nhi, -1, PREG_SPLIT_NO_EMPTY);
 
         // Algorithm mathematical equation
         // A = extractLetter(n[0])
@@ -65,23 +65,23 @@ class StringValidator {
         $calc3 = extractLetter($chars[2]) * 5;
 
         // Step 4 - Multiply first number by 4
-        $calc4 = $chars[3] * 4;
+        $calc4 = intval($chars[3]) * 4;
 
         // Step 5 - Multiply second number by 3
-        $calc5 = $chars[4] * 3;
+        $calc5 = intval($chars[4]) * 3;
 
         // Step 6 - Multiply third number by 2
-        $calc6 = extractLetter($chars[5]) * 2;
+        $calc6 = intval($chars[5]) * 2;
 
         // Step 7 - Total the result of steps 3 to 8
         $sum = $calc1 + $calc2 + $calc3 + $calc4 + $calc5 + $calc6;
 
-        // Step 8 - Apply modulus 24 to create a checksum.
-        $divisor = 24;
+        // Step 8 - to note
+        $divisor = 11;
         $rest = $sum % $divisor;
 
-        // Step 9 - Subtract checksum from 24 to create check digit
-        $check_digit = $divisor - $rest;
+        // Step 9 - to note
+        $check_digit = ($divisor - $rest) === 10 ? 0 : ($divisor - $rest);
 
         // Step 10 - If checksum is zero then the NHI number is incorrect
         if ($check_digit === 0) {
@@ -90,7 +90,7 @@ class StringValidator {
         }
 
         // Step 11 - Fourth number must be equal to check digit
-        $last_digit = extractLetter($chars[6]);
+        $last_digit = intval($chars[6]);
 
         if ($last_digit !== $check_digit) {
             var_dump('Legacy Failed');

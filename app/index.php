@@ -17,6 +17,6 @@
 
 require_once 'StringValidator.php';
 
-$string = 'ZAA0024';
+$string = 'ZZZ0016';
 $validator = new StringValidator($string);
 $validator->validateString();
