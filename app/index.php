@@ -15,8 +15,15 @@
  * New: ARE62RS
  */
 
-require_once 'StringValidator.php';
+require_once './StringValidator.php';
 
-$string = 'ZVU27KE';
+// Example usage:
+$string = 'ZAA0025';
 $validator = new StringValidator($string);
+
+// Validate the NHI string and check if it's valid
 $validator->validateString();
+
+// The validateString() method will display a debug message indicating whether the NHI is valid or not.
+// If the NHI is valid, it will display a message like "Legacy format succeeded - NHI is valid" or "New format succeeded - NHI is valid".
+// If the NHI is not valid or does not match any format, it will display "NHI Not Valid".
