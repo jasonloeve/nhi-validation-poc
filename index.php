@@ -18,7 +18,7 @@
 require_once './utils/StringValidator.php';
 
 // Example usage:
-$string = 'ZAA0025';
+$string = 'ARE62RS';
 $validator = new StringValidator($string);
 
 // Validate the NHI string and check if it's valid

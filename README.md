@@ -15,3 +15,9 @@ The key objectives of this POC include:
 5. Offering a foundation for future enhancements, such as integration with existing healthcare systems or user interfaces.
 
 The POC aims to demonstrate the feasibility and effectiveness of the NHI number validation process in PHP 8. It serves as a starting point for further development and integration efforts to support the validation of NHI numbers in real-world healthcare applications.
+
+## Unit Tests
+
+$ vendor/bin/phpunit tests/LetterExtractorTest.php
+
+$ vendor/bin/phpunit tests/StringValidatorTest.php

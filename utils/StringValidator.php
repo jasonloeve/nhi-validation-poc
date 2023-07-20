@@ -7,9 +7,10 @@
  * $validator->validateString();
  */
 
-require_once './LetterExtractor.php';
+require_once 'LetterExtractor.php';
 
-class StringValidator {
+class StringValidator
+{
     private string $string;
     private string $legacyPattern;
     private string $newFormatPattern;
@@ -24,7 +25,7 @@ class StringValidator {
     public function validateString(): void
     {
         if (preg_match($this->legacyPattern, $this->string)) {
-            $this->processString('legacy');
+            $this->processString('legacyFormat');
         } elseif (preg_match($this->newFormatPattern, $this->string)) {
             $this->processString('newFormat');
         } else {

@@ -1,6 +1,7 @@
 <?php
 
-class LetterExtractor {
+class LetterExtractor
+{
     private array $assignedNumbers;
 
     public function __construct()

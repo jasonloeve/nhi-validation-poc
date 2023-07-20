@@ -1,0 +1,14 @@
+{
+    "name": "jasonloeve/nhi-validation",
+    "description": "NZ NHI validation POC",
+    "license": "MIT License",
+    "authors": [
+        {
+            "name": "Jason Loeve",
+            "email": "jasonloeve@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    }
+}
