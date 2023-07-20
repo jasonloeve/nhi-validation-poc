@@ -34,76 +34,118 @@ class StringValidator {
     }
 
     /**
-     * Process the legacy format of the NHI (National Health Index) number for validation.
-     * The function performs a series of steps to validate the legacy format.
+     * Processes the legacy format NHI string and validates its checksum.
      *
-     * @param string $string The NHI number string to be processed and validated.
-     * @return bool True if the legacy NHI format is valid, false otherwise.
+     * @param string $string The legacy format NHI string to process.
+     * @return bool Returns true if the NHI is valid, false otherwise.
      */
     private function processLegacyString(string $string): bool
     {
-        // var_dump('processLegacyString catch');
+        var_dump('Legacy format process started');
 
         $nhi = $string;
-        //$chars = str_split($nhi);
-        $chars = preg_split('//', $nhi, -1, PREG_SPLIT_NO_EMPTY);
+        $chars = str_split($nhi);
 
-        // Algorithm mathematical equation
-        // A = extractLetter(n[0])
-        // B = extractLetter(n[1])
-        // C = extractLetter(n[2])
-        // S = A*7 + B*6 + C*5 + N1*4 + N2*3 + N3*2
-        // D = (24 - (S mod 24)) mod 24
-
-        // Step 1 - Assign first letter its corresponding value from the Alphabet Conversion Table and multiply value by 7
+        // Step 1 - Calculate the first letter value from the Alphabet Conversion Table and multiply it by 7.
         $calc1 = extractLetter($chars[0]) * 7;
 
-        // Step 2 - Assign second letter its corresponding value from the Alphabet Conversion Table and multiply value by 6.
+        // Step 2 - Calculate the second letter value from the Alphabet Conversion Table and multiply it by 6.
         $calc2 = extractLetter($chars[1]) * 6;
 
-        // Step 3 - Assign third letter its corresponding value from the Alphabet Conversion Table and multiply value by 5.
+        // Step 3 - Calculate the third letter value from the Alphabet Conversion Table and multiply it by 5.
         $calc3 = extractLetter($chars[2]) * 5;
 
-        // Step 4 - Multiply first number by 4
+        // Step 4 - Multiply the first number by 4.
         $calc4 = intval($chars[3]) * 4;
 
-        // Step 5 - Multiply second number by 3
+        // Step 5 - Multiply the second number by 3.
         $calc5 = intval($chars[4]) * 3;
 
-        // Step 6 - Multiply third number by 2
+        // Step 6 - Multiply the third number by 2.
         $calc6 = intval($chars[5]) * 2;
 
-        // Step 7 - Total the result of steps 3 to 8
+        // Step 7 - Total the results of steps 1 to 6.
         $sum = $calc1 + $calc2 + $calc3 + $calc4 + $calc5 + $calc6;
 
-        // Step 8 - to note
+        // Step 8 - Calculate the remainder when the sum is divided by 11.
         $divisor = 11;
         $rest = $sum % $divisor;
 
-        // Step 9 - to note
+        // Step 9 - Calculate the check digit based on the remainder.
         $check_digit = ($divisor - $rest) === 10 ? 0 : ($divisor - $rest);
 
-        // Step 10 - If checksum is zero then the NHI number is incorrect
+        // Step 10 - If the checksum is zero, the NHI number is incorrect.
         if ($check_digit === 0) {
-            var_dump('Legacy Failed');
+            var_dump('Legacy format failed - NHI not valid'); // Debug
             return false;
         }
 
-        // Step 11 - Fourth number must be equal to check digit
+        // Step 11 - Get the last digit of the NHI.
         $last_digit = intval($chars[6]);
 
+        // Step 12 - Perform the final check by comparing the last digit with the calculated check digit.
         if ($last_digit !== $check_digit) {
-            var_dump('Legacy Failed');
+            var_dump('Legacy format failed - NHI not valid'); // Debug
             return false;
         }
 
-        var_dump('Legacy Passed');
+        var_dump('Legacy format succeeded - NHI is valid'); // Debug
+
         return true;
     }
 
+    /**
+     * Processes the new format NHI string and validates its checksum.
+     *
+     * @param string $string The new format NHI string to process.
+     * @return bool Returns true if the NHI is valid, false otherwise.
+     */
     private function processNewFormatString(string $string): bool
     {
-        var_dump('new catch');
+        var_dump('New format process started');
+
+        $nhi = $string;
+        $chars = str_split($nhi);
+
+        // Step 1 - Calculate the first letter value from the Alphabet Conversion Table and multiply it by 7.
+        $calc1 = extractLetter($chars[0]) * 7;
+
+        // Step 2 - Calculate the second letter value from the Alphabet Conversion Table and multiply it by 6.
+        $calc2 = extractLetter($chars[1]) * 6;
+
+        // Step 3 - Calculate the third letter value from the Alphabet Conversion Table and multiply it by 5.
+        $calc3 = extractLetter($chars[2]) * 5;
+
+        // Step 4 - Multiply the first number by 4.
+        $calc4 = intval($chars[3]) * 4;
+
+        // Step 5 - Multiply the second number by 3.
+        $calc5 = intval($chars[4]) * 3;
+
+        // Step 6 - Calculate the third number value from the Alphabet Conversion Table and multiply it by 2.
+        $calc6 = extractLetter($chars[5]) * 2;
+
+        // Step 7 - Total the results of steps 1 to 6.
+        $sum = $calc1 + $calc2 + $calc3 + $calc4 + $calc5 + $calc6;
+
+        // Step 8 - Calculate the remainder when the sum is divided by 23.
+        $divisor = 23;
+        $rest = $sum % $divisor;
+
+        // Step 9 - Calculate the check digit based on the remainder.
+        $check_digit = $divisor - $rest;
+
+        // Step 10 - Get the last letter value from the Alphabet Conversion Table.
+        $last_letter_value = extractLetter($chars[6]);
+
+        // Step 11 - Final check: The last letter value must be equal to the calculated check digit.
+        if ($last_letter_value !== $check_digit) {
+            var_dump('New format failed - NHI not valid'); // Debug
+            return false;
+        }
+
+        var_dump('New format succeeded - NHI is valid'); // Debug
+
         return true;
     }
 }
