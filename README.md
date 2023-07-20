@@ -16,8 +16,30 @@ The key objectives of this POC include:
 
 The POC aims to demonstrate the feasibility and effectiveness of the NHI number validation process in PHP 8. It serves as a starting point for further development and integration efforts to support the validation of NHI numbers in real-world healthcare applications.
 
+## Installation
+
+1. Clone the repository:
+
+    ```shell
+    git clone git@github.com:jasonloeve/nhi-validation-poc.git
+
+2. Navigate to the project directory:
+
+    ```shell
+    cd nhi-validation-poc
+
+3. Run script:
+
+    ```shell
+    php index.php
+
 ## Unit Tests
 
-$ vendor/bin/phpunit tests/LetterExtractorTest.php
+Running unit tests:
 
-$ vendor/bin/phpunit tests/StringValidatorTest.php
+    $ vendor/bin/phpunit tests/LetterExtractorTest.php
+    $ vendor/bin/phpunit tests/StringValidatorTest.php
+
+## License
+
+This project is licensed under the MIT License.
