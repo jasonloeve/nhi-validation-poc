@@ -7,7 +7,7 @@
  * $validator->validateString();
  */
 
-require_once './utils/LetterExtractor.php';
+require_once './LetterExtractor.php';
 
 class StringValidator {
     private string $string;

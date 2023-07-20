@@ -15,7 +15,7 @@
  * New: ARE62RS
  */
 
-require_once './StringValidator.php';
+require_once './utils/StringValidator.php';
 
 // Example usage:
 $string = 'ZAA0025';
